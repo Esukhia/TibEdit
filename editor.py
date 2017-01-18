@@ -18,8 +18,8 @@ from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QDialog,
 
 import highlighter
 import misc
-import third_party.PyTib
-from PyTib import Segment
+import third_party.PyTib.pytib as pytib
+#from pytib import Segment
 
 class MainWindow(QMainWindow):
 
