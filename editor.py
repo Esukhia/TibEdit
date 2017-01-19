@@ -199,7 +199,7 @@ class MainWindow(QMainWindow):
                         if not word.endswith('་'):
                             word += '་'
                         # format as needed
-                        formated_word = '\\s{}?\\s'.format(word)
+                        formated_word = '^{0}?\\s|\\s{0}?\\s|\\s{0}?$'.format(word)
                         self.levelLists['Level' + level].append(formated_word)
         return self.levelLists
 
