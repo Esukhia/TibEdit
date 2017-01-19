@@ -19,7 +19,6 @@ from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QDialog,
 import highlighter
 import misc
 import third_party.PyTib.pytib as pytib
-#from pytib import Segment
 
 class MainWindow(QMainWindow):
 
@@ -148,29 +147,30 @@ class MainWindow(QMainWindow):
 
     def segment(self):
         self.statusBar().showMessage("Segmenting text...", 1000)
-        seg = Segment()
+        seg = pytib.Segment()
+        seg.include_user_vocab()
         file1 = self.editor.toPlainText()
         cut_text = seg.segment(file1)
         self.editor.setPlainText(cut_text)
         self.editor.document().setModified(True)
 
     def createActions(self):
-        self.newFileAction = QAction(QIcon('files/filenew.png'), "&New...",
+        self.newFileAction = QAction(QIcon('imgs/filenew.png'), "&New...",
                                      self, shortcut=QKeySequence.New,
                                      statusTip="Create a new file", triggered=self.newFile)
-        self.openFileAction = QAction(QIcon('files/fileopen.png'), "&Open...",
+        self.openFileAction = QAction(QIcon('imgs/fileopen.png'), "&Open...",
                                       self, shortcut=QKeySequence.Open,
                                       statusTip="Open a text file", triggered=self.openFile)
-        self.saveFileAction = QAction(QIcon('files/filesave.png'), "&Save...", self,
+        self.saveFileAction = QAction(QIcon('imgs/filesave.png'), "&Save...", self,
                                       shortcut=QKeySequence.Save,
                                       statusTip="Save the current document", triggered=self.saveFile)
-        self.undoAction = QAction(QIcon('files/editundo.png'), "&Undo", self,
+        self.undoAction = QAction(QIcon('imgs/editundo.png'), "&Undo", self,
                                   shortcut=QKeySequence.Undo,
                                   statusTip="Undo the last editing action", triggered=self.undo)
-        self.redoAction = QAction(QIcon('files/editredo.png'), "&Redo", self,
+        self.redoAction = QAction(QIcon('imgs/editredo.png'), "&Redo", self,
                                   shortcut=QKeySequence.Redo,
                                   statusTip="Redo the last editing action", triggered=self.redo)
-        self.segmentAction = QAction(QIcon('files/segment.png'), "&Segment", self,
+        self.segmentAction = QAction(QIcon('imgs/segment.png'), "&Segment", self,
                                      shortcut="Ctrl+Shift+C",
                                      statusTip="Segment the current document", triggered=self.segment)
         self.actionQuit = QAction("&Quit", self, shortcut="Ctrl+Q",
@@ -183,7 +183,7 @@ class MainWindow(QMainWindow):
 # entry so they can only be discovered after segmentation.
 
     def loadLists(self):
-        lists_path = 'files/Lists'
+        lists_path = 'data/Lists'
         lists_types = ['General']  # ['General', 'Speech', 'Writing']
         lists_levels = ['1', '2', '3']
 

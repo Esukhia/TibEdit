@@ -27,7 +27,7 @@ class Highlighter(QSyntaxHighlighter):
         grammarFormat.setForeground(Qt.red)
         grammarFormat.setFontWeight(QFont.Bold)
         # grammarPatterns = ["([^གང]་གིས[་༌།༎༏༐༑༔]+|[^ནམརལ]་གྱིས[་༌།༎༏༐༑༔\s]+(?!ཤིག|ལ))", "yay"]
-        grammarPatterns = open_file('files/rules.txt').strip().split('\n')
+        grammarPatterns = open_file('data/rules.txt').strip().split('\n')
 
         self.highlightingRules = [(QRegExp(pattern), grammarFormat)
                                   for pattern in grammarPatterns]
