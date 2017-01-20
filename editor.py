@@ -155,22 +155,22 @@ class MainWindow(QMainWindow):
         self.editor.document().setModified(True)
 
     def createActions(self):
-        self.newFileAction = QAction(QIcon('imgs/filenew.png'), "&New...",
+        self.newFileAction = QAction(QIcon(os.path.join('imgs', 'filenew.png')), "&New...",
                                      self, shortcut=QKeySequence.New,
                                      statusTip="Create a new file", triggered=self.newFile)
-        self.openFileAction = QAction(QIcon('imgs/fileopen.png'), "&Open...",
+        self.openFileAction = QAction(QIcon(os.path.join('imgs', 'fileopen.png')), "&Open...",
                                       self, shortcut=QKeySequence.Open,
                                       statusTip="Open a text file", triggered=self.openFile)
-        self.saveFileAction = QAction(QIcon('imgs/filesave.png'), "&Save...", self,
+        self.saveFileAction = QAction(QIcon(os.path.join('imgs', 'filesave.png')), "&Save...", self,
                                       shortcut=QKeySequence.Save,
                                       statusTip="Save the current document", triggered=self.saveFile)
-        self.undoAction = QAction(QIcon('imgs/editundo.png'), "&Undo", self,
+        self.undoAction = QAction(QIcon(os.path.join('imgs', 'editundo.png')), "&Undo", self,
                                   shortcut=QKeySequence.Undo,
                                   statusTip="Undo the last editing action", triggered=self.undo)
-        self.redoAction = QAction(QIcon('imgs/editredo.png'), "&Redo", self,
+        self.redoAction = QAction(QIcon(os.path.join('imgs', 'editredo.png')), "&Redo", self,
                                   shortcut=QKeySequence.Redo,
                                   statusTip="Redo the last editing action", triggered=self.redo)
-        self.segmentAction = QAction(QIcon('imgs/segment.png'), "&Segment", self,
+        self.segmentAction = QAction(QIcon(os.path.join('imgs', 'segment.png')), "&Segment", self,
                                      shortcut="Ctrl+Shift+C",
                                      statusTip="Segment the current document", triggered=self.segment)
         self.actionQuit = QAction("&Quit", self, shortcut="Ctrl+Q",
@@ -183,16 +183,16 @@ class MainWindow(QMainWindow):
 # entry so they can only be discovered after segmentation.
 
     def loadLists(self):
-        lists_path = 'data/Lists'
+        lists_path = os.path.join('data', 'Lists')
         lists_types = ['General']  # ['General', 'Speech', 'Writing']
         lists_levels = ['1', '2', '3']
 
         self.levelLists = {}
         for type in lists_types:
             for level in lists_levels:
-                in_path = '{}/{}/{}'.format(lists_path, type, level)
+                in_path = os.path.join(lists_path, type, level)
                 for f in os.listdir(in_path):
-                    raw_list = misc.open_file('{}/{}'.format(in_path, f)).strip().split('\n')
+                    raw_list = misc.open_file(os.path.join(in_path, f)).strip().split('\n')
                     self.levelLists['Level'+level] = []
                     for word in raw_list:
                         # add a tsek where missing

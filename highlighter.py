@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (QAction, QApplication, QDialog, QDockWidget,
                              QPushButton, QTextEdit, QWidget)
 
 from misc import open_file
+import os
 
 class Highlighter(QSyntaxHighlighter):
 # This class applies the content of the highlightingRules list to a document.
@@ -27,7 +28,7 @@ class Highlighter(QSyntaxHighlighter):
         grammarFormat.setForeground(Qt.red)
         grammarFormat.setFontWeight(QFont.Bold)
         # grammarPatterns = ["([^གང]་གིས[་༌།༎༏༐༑༔]+|[^ནམརལ]་གྱིས[་༌།༎༏༐༑༔\s]+(?!ཤིག|ལ))", "yay"]
-        grammarPatterns = open_file('data/rules.txt').strip().split('\n')
+        grammarPatterns = open_file(os.path.join('data', 'rules.txt')).strip().split('\n')
 
         self.highlightingRules = [(QRegExp(pattern), grammarFormat)
                                   for pattern in grammarPatterns]
