@@ -140,3 +140,6 @@ Makefile*
 
 # QtCtreator CMake
 CMakeLists.txt.user*
+Supprimerait .gitignore
+.dependencies/__pycache__/
+.dependencies/pytib/__pycache__/
