@@ -1,4 +1,7 @@
+#!/usr/local/bin/env python3.5
+# -*- coding: utf-8 -*-
 
+import os
 import PyQt5
 from PyQt5.QtCore import QFile, QRegExp, Qt, QTextStream
 from PyQt5.QtGui import (QFont, QIcon, QKeySequence, QSyntaxHighlighter,
@@ -8,7 +11,10 @@ from PyQt5.QtWidgets import (QAction, QApplication, QDialog, QDockWidget,
                              QListWidget, QMainWindow, QMenu, QMessageBox,
                              QPushButton, QTextEdit, QWidget)
 
-from misc import open_file
+from dependencies.pytib.common import open_file
+
+this_dir = os.path.split(__file__)[0]
+grammar_patterns_path = os.path.join(this_dir, '..','ཉེར་མཁོ་ཡིག་ཆ།', 'འབྲི་དེབ་སྙི་ཆས་ལ་མཁོ་བ།', 'rules.txt')
 
 class Highlighter(QSyntaxHighlighter):
 # This class applies the content of the highlightingRules list to a document.
@@ -27,7 +33,7 @@ class Highlighter(QSyntaxHighlighter):
         grammarFormat.setForeground(Qt.red)
         grammarFormat.setFontWeight(QFont.Bold)
         # grammarPatterns = ["([^གང]་གིས[་༌།༎༏༐༑༔]+|[^ནམརལ]་གྱིས[་༌།༎༏༐༑༔\s]+(?!ཤིག|ལ))", "yay"]
-        grammarPatterns = open_file('data/rules.txt').strip().split('\n')
+        grammarPatterns = open_file(grammar_patterns_path).strip().split('\n')
 
         self.highlightingRules = [(QRegExp(pattern), grammarFormat)
                                   for pattern in grammarPatterns]
@@ -38,7 +44,7 @@ class Highlighter(QSyntaxHighlighter):
         level1Format.setForeground(Qt.blue)
         level1Format.setFontWeight(QFont.Bold)
 # Find the list called "Level1" in the dict and give it to level1Regexes
-        level1Regexes = listsDict['Level1']
+        level1Regexes = listsDict['དང་པོ།']
 
         self.level1Patterns = [(QRegExp(pattern), level1Format)
                                   for pattern in level1Regexes]
@@ -48,7 +54,7 @@ class Highlighter(QSyntaxHighlighter):
         level2Format = QTextCharFormat()
         level2Format.setForeground(Qt.darkGreen)
         level2Format.setFontWeight(QFont.Bold)
-        level2Regexes = listsDict['Level2']
+        level2Regexes = listsDict['གཉིས་པ།']
 
         self.level2Patterns = [(QRegExp(pattern), level2Format)
                                   for pattern in level2Regexes]
@@ -58,7 +64,7 @@ class Highlighter(QSyntaxHighlighter):
         level3Format = QTextCharFormat()
         level3Format.setForeground(Qt.darkMagenta)
         level3Format.setFontWeight(QFont.Bold)
-        level3Regexes = listsDict['Level3']
+        level3Regexes = listsDict['གསུམ་པ།']
 
         self.level3Patterns = [(QRegExp(pattern), level3Format)
                                   for pattern in level3Regexes]

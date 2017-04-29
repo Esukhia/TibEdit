@@ -1,24 +1,21 @@
 #!/usr/local/bin/env python3.5
 # -*- coding: utf-8 -*-
 
-import sys
 import os
+import sys
 
-import PyQt5
-from PyQt5.QtCore import QFile, QRegExp, Qt, QTextStream
-from PyQt5.QtGui import (QFont, QIcon, QKeySequence, QPixmap,
-                         QSyntaxHighlighter, QTextCharFormat, QTextCursor,
-                         QTextTableFormat)
-from PyQt5.QtWidgets import (QAction, QApplication, QCheckBox, QDialog,
-                             QDockWidget, QFileDialog, QGridLayout, QLabel,
-                             QLineEdit, QListView, QListWidget,
-                             QListWidgetItem, QMainWindow, QMenu, QMenuBar,
-                             QMessageBox, QPushButton, QRadioButton,
-                             QStyleFactory, QTableView, QTextEdit, QWidget)
+from PyQt5.QtCore import QFile, Qt, QTextStream
+from PyQt5.QtGui import (QFont, QIcon, QKeySequence)
+from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QMainWindow, QMenuBar,
+                             QMessageBox, QStyleFactory, QTextEdit)
 
-import highlighter
-import misc
-import third_party.PyTib.pytib as pytib
+import dependencies.pytib as pytib
+from dependencies import highlighter
+from dependencies.pytib.common import open_file
+
+this_dir = os.path.split(__file__)[0]
+lists_path = os.path.join(this_dir, 'ཚིག་གི་མཐོ་རིམ།')
+
 
 class MainWindow(QMainWindow):
 
@@ -183,24 +180,18 @@ class MainWindow(QMainWindow):
 # entry so they can only be discovered after segmentation.
 
     def loadLists(self):
-        lists_path = 'data/Lists'
-        lists_types = ['General']  # ['General', 'Speech', 'Writing']
-        lists_levels = ['1', '2', '3']
-
         self.levelLists = {}
-        for type in lists_types:
-            for level in lists_levels:
-                in_path = '{}/{}/{}'.format(lists_path, type, level)
-                for f in os.listdir(in_path):
-                    raw_list = misc.open_file('{}/{}'.format(in_path, f)).strip().split('\n')
-                    self.levelLists['Level'+level] = []
-                    for word in raw_list:
-                        # add a tsek where missing
-                        if not word.endswith('་'):
-                            word += '་'
-                        # format as needed
-                        formated_word = '^{0}?\\s|\\s{0}?\\s|\\s{0}?$'.format(word)
-                        self.levelLists['Level' + level].append(formated_word)
+        for level in os.listdir(lists_path):
+            level_name = level.replace('.txt', '')
+            raw_list = open_file(os.path.join(lists_path, level)).strip().split('\n')
+            self.levelLists[level_name] = []
+            for word in raw_list:
+                # add a tsek where missing
+                if not word.endswith('་'):
+                    word += '་'
+                # format as needed
+                formated_word = '^{0}?\\s|\\s{0}?\\s|\\s{0}?$'.format(word)
+                self.levelLists[level_name].append(formated_word)
         return self.levelLists
 
 if __name__ == '__main__':
