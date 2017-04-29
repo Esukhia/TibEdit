@@ -15,6 +15,12 @@ from dependencies.pytib.common import open_file
 
 this_dir = os.path.split(__file__)[0]
 lists_path = os.path.join(this_dir, 'ཚིག་གི་མཐོ་རིམ།')
+file_new_path = os.path.join(this_dir, 'ཉེར་མཁོ་ཡིག་ཆ།', 'འབྲི་དེབ་སྙི་ཆས་ལ་མཁོ་བ།', 'imgs', 'filenew.png')
+file_open_path = os.path.join(this_dir, 'ཉེར་མཁོ་ཡིག་ཆ།', 'འབྲི་དེབ་སྙི་ཆས་ལ་མཁོ་བ།', 'imgs', 'fileopen.png')
+file_save_path = os.path.join(this_dir, 'ཉེར་མཁོ་ཡིག་ཆ།', 'འབྲི་དེབ་སྙི་ཆས་ལ་མཁོ་བ།', 'imgs', 'filesave.png')
+edit_undo_path = os.path.join(this_dir, 'ཉེར་མཁོ་ཡིག་ཆ།', 'འབྲི་དེབ་སྙི་ཆས་ལ་མཁོ་བ།', 'imgs', 'editundo.png')
+edit_redo_path = os.path.join(this_dir, 'ཉེར་མཁོ་ཡིག་ཆ།', 'འབྲི་དེབ་སྙི་ཆས་ལ་མཁོ་བ།', 'imgs', 'editredo.png')
+segment_path = os.path.join(this_dir, 'ཉེར་མཁོ་ཡིག་ཆ།', 'འབྲི་དེབ་སྙི་ཆས་ལ་མཁོ་བ།', 'imgs', 'segment.png')
 
 
 class MainWindow(QMainWindow):
@@ -152,22 +158,22 @@ class MainWindow(QMainWindow):
         self.editor.document().setModified(True)
 
     def createActions(self):
-        self.newFileAction = QAction(QIcon('imgs/filenew.png'), "&New...",
+        self.newFileAction = QAction(QIcon(file_new_path), "&New...",
                                      self, shortcut=QKeySequence.New,
                                      statusTip="Create a new file", triggered=self.newFile)
-        self.openFileAction = QAction(QIcon('imgs/fileopen.png'), "&Open...",
+        self.openFileAction = QAction(QIcon(file_open_path), "&Open...",
                                       self, shortcut=QKeySequence.Open,
                                       statusTip="Open a text file", triggered=self.openFile)
-        self.saveFileAction = QAction(QIcon('imgs/filesave.png'), "&Save...", self,
+        self.saveFileAction = QAction(QIcon(file_save_path), "&Save...", self,
                                       shortcut=QKeySequence.Save,
                                       statusTip="Save the current document", triggered=self.saveFile)
-        self.undoAction = QAction(QIcon('imgs/editundo.png'), "&Undo", self,
+        self.undoAction = QAction(QIcon(edit_undo_path), "&Undo", self,
                                   shortcut=QKeySequence.Undo,
                                   statusTip="Undo the last editing action", triggered=self.undo)
-        self.redoAction = QAction(QIcon('imgs/editredo.png'), "&Redo", self,
+        self.redoAction = QAction(QIcon(edit_redo_path), "&Redo", self,
                                   shortcut=QKeySequence.Redo,
                                   statusTip="Redo the last editing action", triggered=self.redo)
-        self.segmentAction = QAction(QIcon('imgs/segment.png'), "&Segment", self,
+        self.segmentAction = QAction(QIcon(segment_path), "&Segment", self,
                                      shortcut="Ctrl+Shift+C",
                                      statusTip="Segment the current document", triggered=self.segment)
         self.actionQuit = QAction("&Quit", self, shortcut="Ctrl+Q",
